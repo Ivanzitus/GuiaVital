@@ -1,16 +1,23 @@
 Front/
- ├── index.html                 → Página inicial com introdução e últimas postagens
- ├── login.html                 → Login de usuários e administradores
- ├── cadastro-usuario.html      → Cadastro de novos usuários
- ├── cadastro-post.html         → Página para administradores criarem postagens
- ├── post.html                  → Exibição de post individual
- ├── favoritos.html             → Página listando cards favoritos do usuário
- ├── sobre.html                 → Página "Sobre o Projeto e Equipe"
- ├── contato.html               → Página com ChatBot (Tawk.to)
- ├── assets/
- │    ├── css/
- │    │     └── styles.css      → CSS adicional (caso precise personalizar)
- │    └── img/
- │          └── (logos, banners, ilustrações)
- └── scripts/
-      └── main.js               → Lógica JS (tema, login, favoritos etc.)
+├── index.html                 → Página inicial
+├── login.html                 → Página de login
+├── cadastro-usuario.html      → Cadastro de usuários
+├── cadastro-post.html         → Criar nova postagem
+├── post.html                  → Visualização de um post individual
+├── favoritos.html             → Lista de posts favoritos
+├── sobre.html                 → Sobre o projeto e equipe
+├── contato.html               → Página com o ChatBot (Tawk.to)
+│
+├── components/
+│   ├── header.html            → Cabeçalho global com menu lateral e tema
+│   └── footer.html            → Rodapé global com créditos
+│
+├── scripts/
+│   └── main.js                → Lógica principal JS (tema, fetch dos componentes, etc.)
+│
+├── assets/
+│   └── img/
+│       ├── logo.png
+│       ├── banner.jpg
+│
+└── README.md                 
