@@ -1,30 +1,37 @@
-// Importação dinâmica dos componentes
+// Carrega componentes HTML dinâmicos (header e footer)
 async function loadComponent(id, path) {
-  const res = await fetch(path);
-  const html = await res.text();
-  document.getElementById(id).innerHTML = html;
+  try {
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`Erro ${response.status}: ${path}`);
+    const html = await response.text();
+    document.getElementById(id).innerHTML = html;
+  } catch (err) {
+    console.error("Erro ao carregar componente:", err);
+  }
 }
 
-// Carrega header e footer automaticamente
+// Ao carregar a página
 document.addEventListener("DOMContentLoaded", async () => {
   await loadComponent("header", "components/header.html");
   await loadComponent("footer", "components/footer.html");
-
-  const savedTheme = localStorage.getItem("theme") || "synthwave";
-  document.documentElement.setAttribute("data-theme", savedTheme);
-  const checkbox = document.getElementById("themeToggle");
-  if (checkbox) checkbox.checked = savedTheme !== "silk";
 });
 
-// Função de alternância do tema
+// Tema claro/escuro
 function toggleTheme() {
-  const checkbox = document.getElementById("themeToggle");
-  const theme = checkbox.checked ? "synthwave" : "silk";
-  document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("theme", theme);
+  const html = document.documentElement;
+  const current = html.getAttribute("data-theme");
+  const next = current === "light" ? "dark" : "light";
+  html.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
 }
 
-// Abrir e fechar sidebar
+// Carregar tema salvo
+window.addEventListener("load", () => {
+  const theme = localStorage.getItem("theme") || "light";
+  document.documentElement.setAttribute("data-theme", theme);
+});
+
+// Sidebar
 function toggleSidebar() {
   const sidebar = document.getElementById("sidebar");
   sidebar.classList.toggle("-translate-x-full");
