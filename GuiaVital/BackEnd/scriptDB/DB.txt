@@ -1,0 +1,111 @@
+-- ============================================
+-- BANCO DE DADOS: saude_db
+-- AUTOR: (Seu nome)
+-- DESCRIÇÃO: Estrutura para sistema de produtos de saúde
+-- ============================================
+ 
+-- Criar banco de dados
+CREATE DATABASE IF NOT EXISTS saude_db
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_general_ci;
+ 
+USE saude_db;
+ 
+-- ============================================
+-- TABELA: Usuario
+-- ============================================
+CREATE TABLE Usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    tipo TINYINT NOT NULL DEFAULT 0 COMMENT '0 = comum, 1 = admin/profissional',
+    gmail VARCHAR(255) NOT NULL UNIQUE,
+    senhaHash VARCHAR(255) NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    urlAvatar VARCHAR(255)
+) ENGINE=InnoDB;
+ 
+-- ============================================
+-- TABELA: Categoria
+-- ============================================
+CREATE TABLE Categoria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL UNIQUE
+) ENGINE=InnoDB;
+ 
+-- ============================================
+-- TABELA: Produto
+-- ============================================
+CREATE TABLE Produto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    tipo ENUM('natural', 'industrial') NOT NULL,
+    fkCategoria INT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fkCategoria) REFERENCES Categoria(id)
+      ON DELETE SET NULL
+      ON UPDATE CASCADE
+) ENGINE=InnoDB;
+ 
+-- Índice adicional para facilitar buscas por tipo e categoria
+CREATE INDEX idx_produto_tipo_categoria ON Produto (tipo, fkCategoria);
+ 
+-- ============================================
+-- TABELA: Comparacao
+-- ============================================
+CREATE TABLE Comparacao (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fkProdutoA INT NOT NULL,
+    fkProdutoB INT NOT NULL,
+    tipoComparacao VARCHAR(50),
+    resultado TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fkProdutoA) REFERENCES Produto(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
+    FOREIGN KEY (fkProdutoB) REFERENCES Produto(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+) ENGINE=InnoDB;
+ 
+-- ============================================
+-- INSERÇÕES DE EXEMPLO
+-- ============================================
+ 
+-- Categorias
+INSERT INTO Categoria (nome) VALUES 
+('enxaqueca'),
+('queimadura'),
+('alergia'),
+('dor muscular');
+ 
+-- Produtos
+INSERT INTO Produto (nome, descricao, tipo, fkCategoria) VALUES
+('Chá de camomila', 'Calmante natural indicado para enxaqueca leve.', 'natural', 1),
+('Analgésico X', 'Medicamento industrial para alívio rápido da dor de cabeça.', 'industrial', 1),
+('Pomada de babosa', 'Produto natural para queimaduras leves.', 'natural', 2),
+('Pomada Química Y', 'Pomada industrial cicatrizante.', 'industrial', 2);
+ 
+-- Comparações
+INSERT INTO Comparacao (fkProdutoA, fkProdutoB, tipoComparacao, resultado)
+VALUES
+(1, 2, 'eficácia', 'Ambos aliviam a dor, mas o industrial é mais rápido e o natural tem menos efeitos colaterais.'),
+(3, 4, 'cicatrização', 'A pomada natural é mais suave, mas o industrial age mais rápido.');
+ 
+-- ============================================
+-- CONSULTA DE EXEMPLO
+-- ============================================
+ 
+-- Comparar produtos naturais e industriais para “enxaqueca”
+SELECT 
+  p.nome,
+  p.tipo,
+  c.nome AS categoria
+FROM Produto p
+JOIN Categoria c ON p.fkCategoria = c.id
+WHERE c.nome = 'enxaqueca'
+ORDER BY p.tipo;
+ 
+-- ============================================
+-- FIM DO SCRIPT
+-- ============================================
