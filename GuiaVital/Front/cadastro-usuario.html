@@ -37,4 +37,50 @@
     </aside>
   </footer>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nome = form.querySelector('input[type="text"]').value;
+            const email = form.querySelector('input[type="email"]').value;
+            const senha = form.querySelector('input[type="password"]').value;
+            const btn = form.querySelector('button');
+            
+            // Alterar estado do botão
+            btn.innerHTML = 'Aguarde...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/usuarios/registrar", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        nome: nome,
+                        gmail: email, // O campo na API é 'gmail'
+                        senha: senha
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.mensagem || "Cadastro realizado com sucesso!");
+                    window.location.href = "login.html"; // Redireciona para o login
+                } else {
+                    alert(`Erro ao cadastrar: ${data.detail || data.mensagem}`);
+                }
+            } catch (error) {
+                console.error("Erro de rede/servidor:", error);
+                alert("Erro de conexão. Tente novamente mais tarde.");
+            } finally {
+                btn.innerHTML = 'Cadastrar';
+                btn.disabled = false;
+            }
+        });
+    });
+</script>
 </html>

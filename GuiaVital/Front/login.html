@@ -46,4 +46,52 @@
   </footer>
 
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = form.querySelector('input[type="email"]').value;
+            const senha = form.querySelector('input[type="password"]').value;
+            const btn = form.querySelector('button');
+            
+            // Alterar estado do botão
+            btn.innerHTML = 'Entrando...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/usuarios/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        gmail: email, // O campo na API é 'gmail'
+                        senha: senha
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // 1. Salvar Token e Dados no localStorage
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userData', JSON.stringify(data.usuario));
+                    
+                    alert("Login realizado com sucesso!");
+                    window.location.href = "index.html"; // Redireciona para a página inicial
+                } else {
+                    alert(`Erro no login: ${data.detail || "Credenciais inválidas"}`);
+                }
+            } catch (error) {
+                console.error("Erro de rede/servidor:", error);
+                alert("Erro de conexão. Tente novamente mais tarde.");
+            } finally {
+                btn.innerHTML = 'Entrar';
+                btn.disabled = false;
+            }
+        });
+    });
+</script>
 </html>

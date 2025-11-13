@@ -39,4 +39,69 @@
     </aside>
   </footer>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector('form');
+        
+        // **IMPORTANTE:** Verifique se o usuário está logado
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken) {
+            alert("Você precisa estar logado para cadastrar produtos.");
+            window.location.href = "login.html"; 
+            return;
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Nota: O campo 'file' (input type="file") não está sendo enviado
+            // para a API pois ela não está configurada para receber arquivos.
+            // A API espera apenas 'nome', 'descricao', 'tipo', 'fkCategoria'.
+            
+            const nome = form.querySelector('input[placeholder="Nome do Produto"]').value;
+            const tipo = "Produto Geral"; // O campo 'tipo' não existe no HTML, usando um valor padrão
+            const descricao = form.querySelector('textarea[placeholder="Descrição"]').value;
+            
+            // O campo "Categoria" no HTML é input type="text", mas a API espera fkCategoria (ID numérico). 
+            // Para simplificar, estamos usando 1 como FK padrão.
+            // Para um sistema real, este input deveria ser um <select> populado via API.
+            const fkCategoria = 1; 
+
+            const btn = form.querySelector('button');
+            btn.innerHTML = 'Salvando...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/produtos/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${authToken}` // ENVIANDO O TOKEN
+                    },
+                    body: JSON.stringify({
+                        nome: nome,
+                        descricao: descricao,
+                        tipo: tipo, 
+                        fkCategoria: fkCategoria 
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.mensagem || "Produto cadastrado com sucesso!");
+                    form.reset();
+                } else {
+                    alert(`Erro ao cadastrar produto: ${data.detail || data.mensagem}`);
+                }
+            } catch (error) {
+                console.error("Erro de rede/servidor:", error);
+                alert("Erro de conexão ou token inválido. Tente logar novamente.");
+            } finally {
+                btn.innerHTML = 'Salvar Produto';
+                btn.disabled = false;
+            }
+        });
+    });
+</script>
 </html>
