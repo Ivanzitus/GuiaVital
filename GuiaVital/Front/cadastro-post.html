@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="synthwave">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Post - Guia Vital</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-blue-800 to-blue-600 min-h-screen text-white flex flex-col">
+
+<header class="navbar bg-base-300 shadow-md">
+  <div class="flex-1">
+    <a href="index.html" class="btn btn-ghost text-xl">Guia Vital</a>
+  </div>
+</header>
+
+<main class="flex-1 flex items-center justify-center p-6">
+  <div class="card bg-base-200 shadow-lg w-full max-w-2xl">
+    <div class="card-body">
+      <h2 class="card-title justify-center text-2xl">Nova Postagem</h2>
+      <form class="space-y-4">
+        <input type="text" placeholder="Título do Post" class="input input-bordered w-full" required>
+        <select class="select select-bordered w-full">
+          <option disabled selected>Categoria</option>
+          <option>Medicina Básica</option>
+          <option>Medicamentos Naturais</option>
+          <option>Alimentos e Saúde</option>
+        </select>
+        <textarea class="textarea textarea-bordered w-full" rows="5" placeholder="Conteúdo do post..." required></textarea>
+        <button class="btn btn-primary w-full">Publicar</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="footer footer-center p-4 bg-base-200 text-base-content">
+  <aside><p>© 2025 Guia Vital — Administração</p></aside>
+</footer>
+
+</body>
+</html>

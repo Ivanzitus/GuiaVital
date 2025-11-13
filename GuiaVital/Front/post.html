@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="synthwave">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post | Guia Vital</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-blue-900 to-indigo-700 min-h-screen flex flex-col text-white">
+
+  <!-- Header -->
+  <header class="navbar bg-base-300 shadow-lg">
+    <div class="flex-1">
+      <a href="index.html" class="btn btn-ghost text-xl">Guia Vital</a>
+    </div>
+    <div class="flex-none gap-2">
+      <a href="index.html" class="btn btn-ghost">Início</a>
+      <a href="sobre.html" class="btn btn-ghost">Sobre</a>
+      <a href="login.html" class="btn btn-ghost">Login</a>
+    </div>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="flex-1 max-w-5xl mx-auto p-6 space-y-10">
+
+    <!-- Post -->
+    <article class="card bg-base-200 shadow-2xl p-6">
+      <header class="mb-4">
+        <h1 class="text-4xl font-bold mb-2">Os Benefícios do Alecrim para a Saúde</h1>
+        <div class="flex flex-wrap items-center gap-3 text-sm opacity-80">
+          <div class="avatar">
+            <div class="w-10 rounded-full">
+              <img src="https://api.dicebear.com/8.x/adventurer/svg?seed=Saude" alt="Autor">
+            </div>
+          </div>
+          <p>Por <strong>Davi Meurer</strong></p>
+          <span>•</span>
+          <p>Publicado em 12 de Novembro de 2025</p>
+          <span>•</span>
+          <button class="btn btn-sm btn-outline btn-primary" id="fav-btn">❤️ Favoritar</button>
+        </div>
+      </header>
+
+      <figure class="my-6">
+        <img src="https://images.unsplash.com/photo-1606761568499-6e5c9d0f3e4d?auto=format&fit=crop&w=1200&q=60" alt="Imagem ilustrativa do alecrim" class="rounded-xl shadow-lg">
+      </figure>
+
+      <section class="space-y-4 text-lg leading-relaxed">
+        <p>
+          O alecrim é uma erva aromática com propriedades medicinais reconhecidas há séculos. 
+          Ele auxilia na digestão, melhora a circulação sanguínea e é um poderoso antioxidante natural.
+        </p>
+        <p>
+          Estudos mostram que o consumo regular do chá de alecrim pode contribuir para a memória e concentração, 
+          além de atuar como estimulante natural, sendo uma excelente opção para o dia a dia.
+        </p>
+        <p>
+          Pode ser utilizado em forma de chá, óleo essencial ou como tempero em preparações culinárias, 
+          trazendo benefícios tanto para o corpo quanto para a mente.
+        </p>
+      </section>
+    </article>
+
+    <!-- Seção de comentários -->
+    <section class="card bg-base-200 shadow-xl p-6">
+      <h2 class="text-2xl font-semibold mb-4">Comentários</h2>
+
+      <!-- Lista de comentários -->
+      <div id="comments" class="space-y-3 mb-6">
+        <div class="chat chat-start">
+          <div class="chat-image avatar">
+            <div class="w-10 rounded-full">
+              <img src="https://api.dicebear.com/8.x/adventurer/svg?seed=Usuario1" alt="Avatar usuário">
+            </div>
+          </div>
+          <div class="chat-header">
+            Maria
+            <time class="text-xs opacity-50 ml-2">10:45</time>
+          </div>
+          <div class="chat-bubble">Adorei saber disso! Não fazia ideia de que o alecrim ajudava na concentração.</div>
+        </div>
+
+        <div class="chat chat-start">
+          <div class="chat-image avatar">
+            <div class="w-10 rounded-full">
+              <img src="https://api.dicebear.com/8.x/adventurer/svg?seed=Usuario2" alt="Avatar usuário">
+            </div>
+          </div>
+          <div class="chat-header">
+            João
+            <time class="text-xs opacity-50 ml-2">11:02</time>
+          </div>
+          <div class="chat-bubble">Excelente artigo! Poderiam falar mais sobre outros chás medicinais?</div>
+        </div>
+      </div>
+
+      <!-- Novo comentário -->
+      <form id="comment-form" class="space-y-3">
+        <textarea id="comment-text" class="textarea textarea-bordered w-full text-black" placeholder="Escreva seu comentário..." required></textarea>
+        <button type="submit" class="btn btn-primary w-full">Enviar comentário</button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-4 bg-base-200 text-base-content mt-10">
+    <aside>
+      <p>© 2025 Guia Vital — Conteúdos revisados por profissionais da saúde</p>
+    </aside>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Sistema de Favoritar
+    const favBtn = document.getElementById("fav-btn");
+    favBtn.addEventListener("click", () => {
+      if (favBtn.classList.contains("btn-primary")) {
+        favBtn.classList.remove("btn-primary");
+        favBtn.classList.add("btn-success");
+        favBtn.innerHTML = "💚 Favoritado";
+      } else {
+        favBtn.classList.remove("btn-success");
+        favBtn.classList.add("btn-primary");
+        favBtn.innerHTML = "❤️ Favoritar";
+      }
+    });
+
+    // Sistema básico de comentários (local)
+    const form = document.getElementById("comment-form");
+    const comments = document.getElementById("comments");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const text = document.getElementById("comment-text").value.trim();
+      if (!text) return;
+
+      const newComment = document.createElement("div");
+      newComment.className = "chat chat-start";
+      newComment.innerHTML = `
+        <div class="chat-image avatar">
+          <div class="w-10 rounded-full">
+            <img src="https://api.dicebear.com/8.x/adventurer/svg?seed=NovoUsuario" alt="Avatar">
+          </div>
+        </div>
+        <div class="chat-header">
+          Usuário
+          <time class="text-xs opacity-50 ml-2">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</time>
+        </div>
+        <div class="chat-bubble">${text}</div>
+      `;
+
+      comments.appendChild(newComment);
+      document.getElementById("comment-text").value = "";
+    });
+  </script>
+</body>
+</html>
