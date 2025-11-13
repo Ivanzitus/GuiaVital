@@ -9,14 +9,14 @@
 </head>
 <body class="bg-gradient-to-b from-blue-800 to-blue-600 min-h-screen text-white flex flex-col">
 
-  <!-- Header -->
+
   <header class="navbar bg-base-300 shadow-md">
     <div class="flex-1">
       <a href="index.html" class="btn btn-ghost normal-case text-2xl font-bold text-primary hover:text-secondary transition-colors">GuiaVital</a>
     </div>
   </header>
 
-  <!-- Main Content -->
+
   <main class="flex-1 flex items-center justify-center p-6">
     <div class="card bg-base-200 shadow-lg w-full max-w-md">
       <div class="card-body">
@@ -32,18 +32,7 @@
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer footer-center p-4 bg-base-200 text-base-content">
-    <aside>
-      <p>
-        © 2025 GuiaVital — Criado por
-        <br> 
-        <a href="https://github.com/Ivanzitus" class="link link-hover">Ivan Gabriel</a> |
-        <a href="#" class="link link-hover">Davi Meurer</a> |
-        <a href="#" class="link link-hover">Murilo Ramos</a>
-      </p>
-    </aside>
-  </footer>
+<div id="footer-load-point"></div>
 
 </body>
 <script>
@@ -56,7 +45,6 @@
             const senha = form.querySelector('input[type="password"]').value;
             const btn = form.querySelector('button');
             
-            // Alterar estado do botão
             btn.innerHTML = 'Entrando...';
             btn.disabled = true;
 
@@ -67,7 +55,7 @@
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        gmail: email, // O campo na API é 'gmail'
+                        gmail: email, 
                         senha: senha
                     }),
                 });
@@ -75,12 +63,12 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    // 1. Salvar Token e Dados no localStorage
+
                     localStorage.setItem('authToken', data.token);
                     localStorage.setItem('userData', JSON.stringify(data.usuario));
                     
                     alert("Login realizado com sucesso!");
-                    window.location.href = "index.html"; // Redireciona para a página inicial
+                    window.location.href = "index.html"; 
                 } else {
                     alert(`Erro no login: ${data.detail || "Credenciais inválidas"}`);
                 }
@@ -93,5 +81,20 @@
             }
         });
     });
+
+function loadFooter() {
+
+    fetch('components/footer.html')
+        .then(response => response.text()) 
+        .then(html => {
+            document.getElementById('footer-load-point').innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar o footer:', error);
+        });
+}
+
+
+document.addEventListener("DOMContentLoaded", loadFooter)
 </script>
 </html>

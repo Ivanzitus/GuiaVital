@@ -29,21 +29,13 @@
     </div>
   </main>
 
-  <footer class="footer footer-center p-4 bg-base-200 text-base-content transition-all duration-300">
-    <aside>
-      <p>
-        <br>
-        © 2025 GuiaVital — Criado por
-        <br> 
-        <a   href="https://github.com/Ivanzitus">Ivan Gabriel</a> | <a href="#">Davi Meurer</a> | <a href="#">Murilo Ramos<a></p>
-    </aside>
-  </footer>
+<div id="footer-load-point"></div>
+
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const form = document.querySelector('form');
         
-        // **IMPORTANTE:** Verifique se o usuário está logado
         const authToken = localStorage.getItem('authToken');
         if (!authToken) {
             alert("Você precisa estar logado para cadastrar produtos.");
@@ -54,17 +46,12 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Nota: O campo 'file' (input type="file") não está sendo enviado
-            // para a API pois ela não está configurada para receber arquivos.
-            // A API espera apenas 'nome', 'descricao', 'tipo', 'fkCategoria'.
             
             const nome = form.querySelector('input[placeholder="Nome do Produto"]').value;
-            const tipo = "Produto Geral"; // O campo 'tipo' não existe no HTML, usando um valor padrão
+            const tipo = "Produto Geral"; 
             const descricao = form.querySelector('textarea[placeholder="Descrição"]').value;
             
-            // O campo "Categoria" no HTML é input type="text", mas a API espera fkCategoria (ID numérico). 
-            // Para simplificar, estamos usando 1 como FK padrão.
-            // Para um sistema real, este input deveria ser um <select> populado via API.
+
             const fkCategoria = 1; 
 
             const btn = form.querySelector('button');
@@ -76,7 +63,7 @@
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${authToken}` // ENVIANDO O TOKEN
+                        "Authorization": `Bearer ${authToken}`
                     },
                     body: JSON.stringify({
                         nome: nome,
@@ -103,5 +90,17 @@
             }
         });
     });
+    function loadFooter() {
+    fetch('components/footer.html')
+        .then(response => response.text()) 
+        .then(html => {
+            document.getElementById('footer-load-point').innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar o footer:', error);
+        });
+}
+
+document.addEventListener("DOMContentLoaded", loadFooter)
 </script>
 </html>

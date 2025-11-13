@@ -27,15 +27,8 @@
     </div>
   </main>
 
-  <footer class="footer footer-center p-4 bg-base-200 text-base-content transition-all duration-300">
-    <aside>
-      <p>
-        <br>
-        © 2025 GuiaVital — Criado por
-        <br> 
-        <a   href="https://github.com/Ivanzitus">Ivan Gabriel</a> | <a href="#">Davi Meurer</a> | <a href="#">Murilo Ramos<a></p>
-    </aside>
-  </footer>
+<div id="footer-load-point"></div>
+
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -48,7 +41,6 @@
             const senha = form.querySelector('input[type="password"]').value;
             const btn = form.querySelector('button');
             
-            // Alterar estado do botão
             btn.innerHTML = 'Aguarde...';
             btn.disabled = true;
 
@@ -60,7 +52,7 @@
                     },
                     body: JSON.stringify({
                         nome: nome,
-                        gmail: email, // O campo na API é 'gmail'
+                        gmail: email,
                         senha: senha
                     }),
                 });
@@ -69,7 +61,7 @@
 
                 if (response.ok) {
                     alert(data.mensagem || "Cadastro realizado com sucesso!");
-                    window.location.href = "login.html"; // Redireciona para o login
+                    window.location.href = "login.html";
                 } else {
                     alert(`Erro ao cadastrar: ${data.detail || data.mensagem}`);
                 }
@@ -82,5 +74,17 @@
             }
         });
     });
+    function loadFooter() {
+    fetch('components/footer.html')
+        .then(response => response.text()) 
+        .then(html => {
+            document.getElementById('footer-load-point').innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar o footer:', error);
+        });
+}
+
+document.addEventListener("DOMContentLoaded", loadFooter)
 </script>
 </html>
