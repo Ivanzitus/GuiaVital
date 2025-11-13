@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from app.database import get_connection
-from app.schemas import CategoriaBase
-from app.auth import obter_usuario_token
+from ..database import get_connection
+from ..schemas import CategoriaBase
+from ..auth import obter_usuario_token
 
 router = APIRouter(prefix="/categorias", tags=["Categorias"])
 

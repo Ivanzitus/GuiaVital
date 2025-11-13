@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
-from app.database import get_connection
-from app.auth import criar_senha_hash, verificar_senha, criar_token
-from app.schemas import UsuarioCreate, UsuarioLogin, UsuarioOut
+from ..database import get_connection
+from ..auth import criar_senha_hash, verificar_senha, criar_token
+from ..schemas import UsuarioCreate, UsuarioLogin, UsuarioOut
 
 router = APIRouter(prefix="/usuarios", tags=["Usuários"])
 
