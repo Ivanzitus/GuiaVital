@@ -6,6 +6,7 @@
   <title>GuiaVital</title>
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+
   <script>
     // Gerenciamento de tema
     document.addEventListener("DOMContentLoaded", () => {
@@ -34,7 +35,7 @@
   <header class="navbar bg-base-300 shadow-md px-4 fixed top-0 z-50 w-full transition-all duration-300">
     <div class="flex-1 flex items-center gap-2">
       <!-- Botão Sidebar -->
-      <label for="sidebar-toggle" class="btn btn-ghost btn-circle lg:hidden hover:bg-primary hover:text-white transition-colors">
+      <label for="sidebar-toggle" class="btn btn-ghost btn-circle hover:bg-primary hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
           viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -58,7 +59,7 @@
   </header>
 
   <!-- DRAWER (SIDEBAR) -->
-  <div class="drawer lg:drawer-open pt-16">
+  <div class="drawer pt-16">
     <input id="sidebar-toggle" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col items-center">
 
@@ -119,13 +120,12 @@
       </main>
     </div>
 
-    <!-- SIDEBAR MENU -->
     <div class="drawer-side z-40">
       <label for="sidebar-toggle" class="drawer-overlay" onclick="closeSidebar()"></label>
       <aside class="w-64 min-h-full bg-base-200 p-4 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-6">
-            <h2 class="text-lg font-bold text-primary">📚 Menu</h2>
+            <h2 class="text-lg font-bold text-primary"> Menu </h2>
             <button onclick="closeSidebar()" class="btn btn-sm btn-circle btn-ghost hover:bg-error hover:text-white transition-colors">
               ✕
             </button>
@@ -147,7 +147,6 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer class="footer footer-center p-4 bg-base-200 text-base-content mt-10">
     <aside>
       <p>
@@ -159,7 +158,6 @@
     </aside>
   </footer>
 
-  <!-- VLibras -->
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
