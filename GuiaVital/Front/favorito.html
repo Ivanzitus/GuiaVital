@@ -27,9 +27,22 @@
   </div>
 </main>
 
-<footer class="footer footer-center p-4 bg-base-200 text-base-content">
-  <aside><p>© 2025 Guia Vital — Seus conteúdos salvos</p></aside>
-</footer>
+<div id="footer-load-point"></div>
+
+<script>
+function loadFooter() {
+    fetch('components/footer.html')
+        .then(response => response.text()) 
+        .then(html => {
+            document.getElementById('footer-load-point').innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar o footer:', error);
+        });
+}
+
+document.addEventListener("DOMContentLoaded", loadFooter)
+</script>
 
 </body>
 </html>
